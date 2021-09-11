@@ -106,6 +106,10 @@ namespace Services
             string paymentStatus, int pageIndex, int pageSize, out int totalRow)
         {
             var query = _orderRepository.GetAll();
+            if (!string.IsNullOrEmpty(customerName))
+            {
+                query = query.Where(x => x.CustomerName.Contains(customerName));
+            }
             if (!string.IsNullOrEmpty(startDate))
             {
                 DateTime start = DateTime.ParseExact(startDate, "dd/MM/yyyy", CultureInfo.GetCultureInfo("vi-VN"));
