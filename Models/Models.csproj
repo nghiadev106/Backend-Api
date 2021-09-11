@@ -85,6 +85,8 @@
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\VisitorStatistic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AddOrderViewModel.cs" />
+    <Compile Include="ViewModels\OrderDetailViewModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

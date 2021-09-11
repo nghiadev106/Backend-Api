@@ -1,6 +1,8 @@
 ﻿using Data.Infrastructure;
 using Data.Repositories;
 using Models.Models;
+using Models.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -26,6 +28,7 @@ namespace Services
         List<OrderDetail> GetOrderDetails(int orderId);
 
         void Save();
+        int Add(AddOrderViewModel orderViewModel);
     }
 
     public class OrderService : IOrderService
@@ -53,6 +56,38 @@ namespace Services
             {
                 throw ex;
             }
+        }
+
+        public int Add(AddOrderViewModel orderViewModel)
+        {
+            Order order = new Order()
+            {
+                CustomerName = orderViewModel.CustomerName,
+                CustomerAddress = orderViewModel.CustomerAddress,
+                CustomerEmail = orderViewModel.CustomerEmail,
+                CustomerMobile = orderViewModel.CustomerMobile,
+                CustomerMessage = orderViewModel.CustomerMessage,
+                PaymentMethod = orderViewModel.PaymentMethod,
+                CreatedDate = DateTime.Now
+            };
+            _orderRepository.Add(order);
+            _unitOfWork.Commit();
+            var ods = JsonConvert.DeserializeObject<List<OrderDetailViewModel>>(orderViewModel.OrderDetails);
+            foreach (var p in ods)
+            {
+                OrderDetail od = new OrderDetail()
+                {
+                    ProductID = p.ID,
+                    OrderID = order.ID,
+                    Price = p.Price,
+                    Quantity = p.Quantity,
+                    ColorId=1,
+                    SizeId=4
+                };
+                _orderDetailRepository.Add(od);
+                _unitOfWork.Commit();
+            }
+            return 1;
         }
 
         public void UpdateStatus(int orderId)

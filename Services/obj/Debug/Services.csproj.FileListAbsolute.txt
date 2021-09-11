@@ -62,3 +62,5 @@ D:\nghia\API\Backend-Api\Services\obj\Debug\Services.csproj.CoreCompileInputs.ca
 D:\nghia\API\Backend-Api\Services\obj\Debug\Services.csproj.CopyComplete
 D:\nghia\API\Backend-Api\Services\obj\Debug\Services.dll
 D:\nghia\API\Backend-Api\Services\obj\Debug\Services.pdb
+D:\nghia\API\Backend-Api\Services\bin\Debug\Newtonsoft.Json.dll
+D:\nghia\API\Backend-Api\Services\bin\Debug\Newtonsoft.Json.xml

@@ -14,7 +14,7 @@ namespace Common.ViewModels
     }
     public class RevenueStatisticMonthViewModel
     {
-        public string Date { set; get; }
+        public string Month { set; get; }
         public decimal Revenues { set; get; }
         public decimal Benefit { set; get; }
     }

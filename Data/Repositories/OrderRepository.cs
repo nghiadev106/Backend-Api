@@ -94,12 +94,12 @@ namespace Data.Repositories
             var result = query.GroupBy(x => new { x.CreatedDate.Value.Month, x.CreatedDate.Value.Year })
                 .Select(r => new
                 {
-                    Date = r.Key.Month.ToString()+"/"+r.Key.Year.ToString(),
+                    Month = r.Key.Month.ToString()+"/"+r.Key.Year.ToString(),
                     TotalBuy = r.Sum(x => x.OriginalPrice * x.Quantity),
                     TotalSell = r.Sum(x => x.Price * x.Quantity),
                 }).Select(x => new RevenueStatisticMonthViewModel()
                 {
-                    Date = x.Date,
+                    Month = x.Month,
                     Benefit = x.TotalSell - x.TotalBuy,
                     Revenues = x.TotalSell
                 });

@@ -266,6 +266,7 @@
     <Compile Include="Controllers\AppRolesController.cs" />
     <Compile Include="Controllers\AppUsersController.cs" />
     <Compile Include="Controllers\FunctionsController.cs" />
+    <Compile Include="Controllers\APIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PostCategoriesController.cs" />

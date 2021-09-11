@@ -23,7 +23,7 @@ namespace Services
         IEnumerable<Product> GetLastest(int top);
 
         IEnumerable<Product> GetHotProduct(int top);
-
+        IEnumerable<Product> GetProductByCategoryId(int categoryId);
         IEnumerable<Product> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow);
 
         IEnumerable<Product> Search(string keyword, int page, int pageSize, string sort, out int totalRow);
@@ -69,13 +69,13 @@ namespace Services
             _unitOfWork = unitOfWork;
         }
 
-        public void Add(Product Product)
+        public void Add(Product pro)
         {
-            var product = _productRepository.Add(Product);
+            var product = _productRepository.Add(pro);
             _unitOfWork.Commit();
-            if (!string.IsNullOrEmpty(Product.Tags))
+            if (!string.IsNullOrEmpty(pro.Tags))
             {
-                string[] tags = Product.Tags.Split(',');
+                string[] tags = pro.Tags.Split(',');
                 for (var i = 0; i < tags.Length; i++)
                 {
                     var tagId = StringHelper.ToUnsignString(tags[i]);
@@ -89,7 +89,7 @@ namespace Services
                     }
 
                     ProductTag productTag = new ProductTag();
-                    productTag.ProductID = Product.ID;
+                    productTag.ProductID = pro.ID;
                     productTag.TagID = tagId;
                     _productTagRepository.Add(productTag);
                 }
@@ -128,12 +128,12 @@ namespace Services
             _unitOfWork.Commit();
         }
 
-        public void Update(Product Product)
+        public void Update(Product pro)
         {
-            _productRepository.Update(Product);
-            if (!string.IsNullOrEmpty(Product.Tags))
+            _productRepository.Update(pro);
+            if (!string.IsNullOrEmpty(pro.Tags))
             {
-                string[] tags = Product.Tags.Split(',');
+                string[] tags = pro.Tags.Split(',');
                 for (var i = 0; i < tags.Length; i++)
                 {
                     var tagId = StringHelper.ToUnsignString(tags[i]);
@@ -145,9 +145,9 @@ namespace Services
                         tag.Type = CommonConstants.ProductTag;
                         _tagRepository.Add(tag);
                     }
-                    _productTagRepository.DeleteMulti(x => x.ProductID == Product.ID);
+                    _productTagRepository.DeleteMulti(x => x.ProductID == pro.ID);
                     ProductTag productTag = new ProductTag();
-                    productTag.ProductID = Product.ID;
+                    productTag.ProductID = pro.ID;
                     productTag.TagID = tagId;
                     _productTagRepository.Add(productTag);
                 }
@@ -199,7 +199,7 @@ namespace Services
 
         public IEnumerable<Product> Search(string keyword, int page, int pageSize, string sort, out int totalRow)
         {
-            var query = _productRepository.GetMulti(x => x.Status && x.Name.Contains(keyword));
+            var query = _productRepository.Search(keyword);
 
             switch (sort)
             {
@@ -279,6 +279,12 @@ namespace Services
         public IEnumerable<Tag> GetListProductTag(string searchText)
         {
             return _tagRepository.GetMulti(x => x.Type == CommonConstants.ProductTag && searchText.Contains(x.Name));
+        }
+
+        public IEnumerable<Product> GetProductByCategoryId(int categoryId)
+        {
+            var query = _productRepository.GetMulti(x => x.Status && x.CategoryID == categoryId);
+            return query;
         }
     }
 }

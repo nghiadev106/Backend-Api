@@ -47,8 +47,8 @@ D:\nghia\API\Backend-Api\Common\bin\Debug\System.Buffers.xml
 D:\nghia\API\Backend-Api\Common\bin\Debug\System.Numerics.Vectors.xml
 D:\nghia\API\Backend-Api\Common\bin\Debug\de\PdfSharp.resources.dll
 D:\nghia\API\Backend-Api\Common\bin\Debug\de\PdfSharp.Charting.resources.dll
-D:\nghia\API\Backend-Api\Common\obj\Debug\Common.csprojAssemblyReference.cache
 D:\nghia\API\Backend-Api\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 D:\nghia\API\Backend-Api\Common\obj\Debug\Common.csproj.CopyComplete
 D:\nghia\API\Backend-Api\Common\obj\Debug\Common.dll
 D:\nghia\API\Backend-Api\Common\obj\Debug\Common.pdb
+D:\nghia\API\Backend-Api\Common\obj\Debug\Common.csprojAssemblyReference.cache

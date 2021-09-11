@@ -8,7 +8,7 @@ namespace Data.Repositories
     public interface IProductRepository : IRepository<Product>
     {
         IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow);
-        IEnumerable<Product> GetListProduct(string keyword);
+        IEnumerable<Product> Search(string keyword);
     }
 
     public class ProductRepository : RepositoryBase<Product>, IProductRepository
@@ -25,18 +25,13 @@ namespace Data.Repositories
                         where pt.TagID == tagId
                         select p;
             totalRow = query.Count();
-
             return query.OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
         }
 
-        public IEnumerable<Product> GetListProduct(string keyword)
+        public IEnumerable<Product> Search(string keyword)
         {
-            var query = from p in DbContext.Products
-                        select p;
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                query.Where(x => x.Name.Contains(keyword)).ToList();
-            }
+            string queryString = string.Format("SELECT * FROM Products WHERE dbo.fuConvertToUnsign(Name) LIKE N'%' + dbo.fuConvertToUnsign(N'{0}') + '%'", keyword);
+            var query = DbContext.Products.SqlQuery(queryString).ToList();         
             return query;
         }
     }
